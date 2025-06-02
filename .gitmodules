@@ -1,0 +1,3 @@
+[submodule "bodega"]
+	path = bodega
+	url = https://github.com/tu_equipo/bodega.git
