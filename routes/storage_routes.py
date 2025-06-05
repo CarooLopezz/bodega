@@ -12,7 +12,6 @@ def get_storage():
 
 @storage.route('/new', methods=['POST'])
 def add_storage():
-    productName = request.form['productName']
     location = request.form['location']
     capacity = request.form['capacity']
     conditions = request.form.get('conditions', None)

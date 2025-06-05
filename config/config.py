@@ -1,12 +1,14 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv("C:/Users/SONY/Documents/bodega/.env")
 
 user = os.getenv("MYSQL_USER")
+print(os.getenv("MYSQL_USER")) 
 password = os.getenv("MYSQL_PASSWORD")
 host = os.getenv("MYSQL_HOST")
-database = os.getenv("MYSQL_DB")
-port = os.getenv("MYSQL_PORT", "3307")
+database = os.getenv("MYSQL_DATABASE")
+print(os.getenv("MYSQL_DATABASE")) 
+port = os.getenv("MYSQL_PORT", "3306")
 
 DATABASE_CONNECTION_URI = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
