@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %} Gestión de Usuarios {% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-5 p-5">
+    {% include 'partials/_message.html' %} {# Asegúrate de tener partials/_message.html #}
+
+    {% include 'users/add_user.html' %} {# Incluye el formulario para añadir un usuario #}
+  </div>
+
+  <div class="col-md-7 p-5">
+    <table class="table table-dark table-striped align-middle">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre de Usuario</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %} {# Itera sobre la lista de usuarios pasada desde Flask #}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td> {# Asegúrate de que tu modelo User tenga 'username' #}
+          <td>{{ user.email }}</td>
+          <td>
+            {% if user.role == 'admin' %}
+              <span class="badge bg-danger">Administrador</span>
+            {% else %}
+              <span class="badge bg-primary">Usuario</span>
+            {% endif %}
+          </td>
+          <td>
+            {# Botón Editar #}
+            <a href="{{ url_for('users.edit_user', id=user.id) }}" class="btn btn-outline-primary btn-sm">Editar</a>
+
+            {# Formulario Eliminar #}
+            <form
+              action="{{ url_for('users.delete_user', id=user.id) }}"
+              method="POST"
+              style="display: inline"
+              onsubmit="return confirm('¿Estás seguro que querés eliminar a este usuario?');"
+            >
+              <button type="submit" class="btn btn-outline-danger btn-sm">
+                Eliminar
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-center">No hay usuarios registrados.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

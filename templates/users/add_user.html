@@ -1,0 +1,60 @@
+<form
+  action="{{ url_for('users.add_user') }}" 
+  method="POST"
+  class="card bg-black text-light"
+>
+  <div class="card-body p-4">
+    <h1 class="h5 mb-4">Add User</h1>
+
+    <div class="mb-3">
+      <label for="username"> Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username" 
+        class="form-control rounded-0 bg-dark border-0 text-white"
+        placeholder="User Name"
+        autofocus
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="email">Email:</label>
+      <input
+        type="email" 
+        id="email"
+        name="email" 
+        class="form-control rounded-0 bg-dark border-0 text-white"
+        placeholder="User Email"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="password">Password:</label>
+      <input
+        type="password" 
+        id="password"
+        name="password" 
+        class="form-control rounded-0 bg-dark border-0 text-white"
+        placeholder="User Password"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="role">Role:</label>
+      <select
+        id="role"
+        name="role" 
+        class="form-select rounded-0 bg-dark border-0 text-white"
+      >
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary">Save User</button>
+  </div>
+</form>
