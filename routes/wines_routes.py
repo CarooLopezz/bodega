@@ -89,17 +89,17 @@ def edit_wine(id):
     return render_template('wines/edit_wines.html', wines=wines)
 
 
-@wines.route('/delete/<string:id>', methods=['POST'])
+@wines.route('/delete/<string:id>', methods=[ 'POST'])
 def delete_wine(id):
-    wines = Wines.query.get_or_404(id)
+    wine = Wines.query.get_or_404(id)
 
     # Borrar imagen si existe
-    if wines.image:
-        image_path = os.path.join(UPLOAD_FOLDER, wines.image)
+    if wine.image:
+        image_path = os.path.join(UPLOAD_FOLDER, wine.image)
         if os.path.exists(image_path):
             os.remove(image_path)
 
-    db.session.delete(wines)
+    db.session.delete(wine)
     db.session.commit()
     flash('Producto eliminado exitosamente!', 'success')
-    return redirect(url_for('wines.get_wines'))
+    return redirect(url_for('wines.get_wine'))
