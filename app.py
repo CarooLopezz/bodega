@@ -1,4 +1,7 @@
 from flask import Flask
+from routes.reception_routes import reception
+from routes.user_routes import users
+from routes.user_routes import user_bp
 from config.config import DATABASE_CONNECTION_URI
 from models.db import db
 from routes.wines_routes import products
@@ -8,6 +11,10 @@ app = Flask(__name__)
 app.secret_key = 'clave_secreta'
 app.register_blueprint(products)
 app.register_blueprint(about)
+app.register_blueprint(user_bp)
+app.register_blueprint(reception)
+app.register_blueprint(users)
+
 
 
 app.config["SQLALCHEMY_DATABASE_URI"]= DATABASE_CONNECTION_URI
@@ -17,6 +24,8 @@ db.init_app(app)
 
 with app.app_context():
     from models.wines import Wines
+    from models.reception import Reception
+    from models.user import User
     db.drop_all()
     db.create_all()
 
