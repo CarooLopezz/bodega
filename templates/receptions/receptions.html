@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %} Gestión de Recepciones {% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-5 p-5">
+    {% include 'partials/_message.html' %} {# Asegúrate de tener partials/_message.html #}
+
+    {% include 'receptions/add_reception.html' %} {# Incluye el formulario para añadir una recepción #}
+  </div>
+
+  <div class="col-md-7 p-5">
+    <table class="table table-dark table-striped align-middle">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Variedad</th>
+          <th>Inicio Recepción</th>
+          <th>Fin Recepción</th>
+          <th>Peso (kg)</th>
+          <th>Acidez</th>
+          <th>pH</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reception in receptions %} {# Itera sobre la lista de recepciones pasada desde Flask #}
+        <tr>
+          <td>{{ reception.id }}</td>
+          <td>{{ reception.variety }}</td>
+          <td>{{ reception.start_reception.strftime('%Y-%m-%d') if reception.start_reception else 'N/A' }}</td>
+          <td>{{ reception.end_reception.strftime('%Y-%m-%d') if reception.end_reception else 'N/A' }}</td>
+          <td>{{ '%.2f' % reception.weight }}</td>
+          <td>{{ '%.2f' % reception.acidity }}</td>
+          <td>{{ '%.2f' % reception.ph }}</td>
+          <td>
+            {# Botón Editar #}
+            <a href="{{ url_for('receptions.edit_reception', id=reception.id) }}" class="btn btn-outline-primary btn-sm">Editar</a>
+
+            {# Formulario Eliminar #}
+            <form
+              action="{{ url_for('receptions.delete_reception', id=reception.id) }}"
+              method="POST"
+              style="display: inline"
+              onsubmit="return confirm('¿Estás seguro que querés eliminar esta recepción?');"
+            >
+              <button type="submit" class="btn btn-outline-danger btn-sm">
+                Eliminar
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="8" class="text-center">No hay recepciones registradas.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

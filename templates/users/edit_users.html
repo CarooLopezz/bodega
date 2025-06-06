@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Usuario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        /* Estilos similares a tu ejemplo de Wines */
+        body { background-color: #343a40; color: #f8f9fa; }
+        .card { background-color: #212529; border-color: #495057; }
+        .form-control { background-color: #495057; color: #f8f9fa; border: none; }
+        .form-control:focus { background-color: #5a6268; color: #f8f9fa; border-color: #007bff; box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); }
+        .btn-primary { background-color: #007bff; border-color: #007bff; }
+        .btn-primary:hover { background-color: #0056b3; border-color: #0056b3; }
+        .btn-secondary { background-color: #6c757d; border-color: #6c757d; }
+        .btn-secondary:hover { background-color: #5a6268; border-color: #5a6268; }
+        .alert { margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <form action="{{ url_for('users.edit_user', id=user.id) }}" method="POST" class="card bg-black text-light">
+            <div class="card-body p-4">
+                <h1 class="h5 mb-4">Editar Usuario</h1>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="mb-3">
+                    <label for="username">Nombre de Usuario:</label>
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control rounded-0 bg-dark border-0 text-white"
+                        placeholder="Nombre de usuario"
+                        value="{{ user.username }}"
+                        autofocus
+                        required
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control rounded-0 bg-dark border-0 text-white"
+                        placeholder="ejemplo@dominio.com"
+                        value="{{ user.email }}"
+                        required
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="password">Nueva Contraseña (dejar vacío para no cambiar):</label>
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control rounded-0 bg-dark border-0 text-white"
+                        placeholder="Nueva contraseña"
+                        {# No precargar el valor de la contraseña por seguridad #}
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="role">Rol:</label>
+                    <select name="role" class="form-control rounded-0 bg-dark border-0 text-white">
+                        <option value="user" {% if user.role == 'user' %}selected{% endif %}>Usuario</option>
+                        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Administrador</option>
+                        </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                <a href="{{ url_for('users.get_users') }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

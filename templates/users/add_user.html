@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Usuario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        /* Estilos similares a tu ejemplo de Wines */
+        body { background-color: #343a40; color: #f8f9fa; }
+        .card { background-color: #212529; border-color: #495057; }
+        .form-control { background-color: #495057; color: #f8f9fa; border: none; }
+        .form-control:focus { background-color: #5a6268; color: #f8f9fa; border-color: #007bff; box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); }
+        .btn-primary { background-color: #007bff; border-color: #007bff; }
+        .btn-primary:hover { background-color: #0056b3; border-color: #0056b3; }
+        .btn-secondary { background-color: #6c757d; border-color: #6c757d; }
+        .btn-secondary:hover { background-color: #5a6268; border-color: #5a6268; }
+        .alert { margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <form action="{{ url_for('users.add_user') }}" method="POST" class="card bg-black text-light">
+            <div class="card-body p-4">
+                <h1 class="h5 mb-4">Agregar Usuario</h1>
+
+                <div class="mb-3">
+                    <label for="username">Nombre de Usuario:</label>
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control rounded-0 bg-dark border-0 text-white"
+                        placeholder="Nombre de usuario"
+                        autofocus
+                        required
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control rounded-0 bg-dark border-0 text-white"
+                        placeholder="ejemplo@dominio.com"
+                        required
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="password">Contraseña:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control rounded-0 bg-dark border-0 text-white"
+                        placeholder="Contraseña"
+                        required
+                    />
+                </div>
+
+                <div class="mb-3">
+                    <label for="role">Rol:</label>
+                    <select name="role" class="form-control rounded-0 bg-dark border-0 text-white">
+                        <option value="user">Usuario</option>
+                        <option value="admin">Administrador</option>
+                        </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+                <a href="{{ url_for('users.get_users') }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
