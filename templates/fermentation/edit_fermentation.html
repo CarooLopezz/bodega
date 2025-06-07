@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="col-md-6 offset-md-3">
+  <div class="card card-body bg-dark text-white mt-5">
+    <h1 class="text-center">Editar Fermentación</h1>
+
+    <form action="{{ url_for('fermentacion.edit_process', id=fermentation.id) }}" method="POST">
+      <div class="mb-3">
+        <label for="productName">Nombre del Producto:</label>
+        <input
+          type="text"
+          name="productName"
+          value="{{ fermentation.productName }}"
+          class="form-control bg-dark text-white rounded-0"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="startDate">Fecha de Inicio:</label>
+        <input
+          type="date"
+          name="startDate"
+          value="{{ fermentation.startDate }}"
+          class="form-control bg-dark text-white rounded-0"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="temperature">Temperatura (°C):</label>
+        <input
+          type="number"
+          step="0.1"
+          name="temperature"
+          value="{{ fermentation.temperature }}"
+          class="form-control bg-dark text-white rounded-0"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="pH">pH:</label>
+        <input
+          type="number"
+          step="0.1"
+          name="pH"
+          value="{{ fermentation.pH }}"
+          class="form-control bg-dark text-white rounded-0"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="acidity">Acidez:</label>
+        <input
+          type="number"
+          step="0.1"
+          name="acidity"
+          value="{{ fermentation.acidity }}"
+          class="form-control bg-dark text-white rounded-0"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="status">Estado:</label>
+        <select
+          name="status"
+          class="form-select bg-dark text-white rounded-0"
+          required
+        >
+          <option value="1" {% if fermentation.status %}selected{% endif %}>Activo</option>
+          <option value="0" {% if not fermentation.status %}selected{% endif %}>Finalizado</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %} Procesos de Fermentación {% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-5 p-5">
+    <!-- MESSAGE -->
+    {% include 'partials/_message.html' %}
+
+    <!-- FORM -->
+    {% include 'fermentation/add_fermentation.html' %}
+  </div>
+
+  <div class="col-md-7 p-5">
+    <table class="table table-dark table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Fecha de Inicio</th>
+          <th>Temperatura</th>
+          <th>pH</th>
+          <th>Acidez</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fermentation in fermentations %}
+        <tr class="{% if not fermentation.status %}table-danger{% endif %}">
+          <td>{{ fermentation.productName }}</td>
+          <td>{{ fermentation.startDate }}</td>
+          <td>{{ fermentation.temperature }}°C</td>
+          <td>{{ fermentation.pH or 'No registrado' }}</td>
+          <td>{{ fermentation.acidity or 'No registrado' }}</td>
+          <td>
+            {% if fermentation.status %}
+              <span class="badge bg-success">Activo</span>
+            {% else %}
+              <span class="badge bg-danger">Finalizado</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('fermentation.edit_process', id=fermentation.id) }}" class="btn btn-outline-primary btn-sm">Editar</a>
+            <form action="{{ url_for('fermentation.delete_process', id=fermentation.id) }}" method="POST" style="display: inline" onsubmit="return confirm('¿Seguro que quieres eliminar este proceso?');">
+              <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
